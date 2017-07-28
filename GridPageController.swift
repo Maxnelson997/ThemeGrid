@@ -20,7 +20,6 @@ class GridPageController: UIPageViewController, UIPageViewControllerDataSource, 
     var insta_grid_controller:InstaViewGrid!
 //    var image_controller:ViewImageController!
 
-
     var orderedViewControllers:[UIViewController]!
     override func viewDidLoad() {
         super.viewDidLoad()

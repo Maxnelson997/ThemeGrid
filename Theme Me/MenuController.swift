@@ -64,21 +64,19 @@ class MainMenuController: UICollectionViewController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cvcell", for: indexPath) as! imViewCell
         cell.tag = indexPath.item
         cell.is_menu_cell = true
-        
         cell.awakeFromNib()
-
         return cell
     }
     
-    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return singleton.menu_images.count
+//        return singleton.menu_images.count
+        return 6
     }
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
-//    
+
 //    override func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
 //        let temp = singleton.menu_images.remove(at: sourceIndexPath.item)
 //        singleton.menu_images.insert(temp, at: destinationIndexPath.item)
@@ -100,7 +98,7 @@ class MainMenuController: UICollectionViewController {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: collectionView.frame.height * 0.55)
+        return CGSize(width: collectionView.frame.width, height: collectionView.frame.height * 0.5)
     }
     
     
@@ -111,7 +109,7 @@ class MainMenuController: UICollectionViewController {
 extension MainMenuController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let numColumns:CGFloat = 3
-        let boxSize = (collectionView.frame.width - (numColumns - 1)) / 3
+        let boxSize = (collectionView.frame.width - (numColumns)) / 3
         return CGSize(width: (boxSize - 40/3), height: (boxSize - 40/3))
     }
     

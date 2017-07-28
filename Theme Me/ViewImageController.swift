@@ -9,7 +9,9 @@
 import UIKit
 
 class ViewImageController: UIViewController {
-
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     let imView:UIImageView = {
         let i = UIImageView()
         i.translatesAutoresizingMaskIntoConstraints = false

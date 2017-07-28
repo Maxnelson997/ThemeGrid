@@ -42,6 +42,8 @@ class CameraController: UIViewController, UINavigationControllerDelegate, UIImag
 //            imagePicker.showsCameraControls = true
 //            self.present(imagePicker, animated: true, completion: nil)
 //        }
+
+
                 if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary) {
                     let imagePicker = UIImagePickerController()
                     imagePicker.delegate = self
@@ -88,8 +90,14 @@ class CameraController: UIViewController, UINavigationControllerDelegate, UIImag
 //    }
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         self.dismiss(animated: true, completion: {
-            self.appDelegate.goToGrid()
+            
+            
         })
+        picker.dismiss(animated: true, completion: nil)
+        self.appDelegate.goToGrid()
+    }
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
     //save the selected or taken image
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
@@ -122,13 +130,13 @@ class CameraController: UIViewController, UINavigationControllerDelegate, UIImag
         if let img = info[UIImagePickerControllerOriginalImage] as? UIImage {
             singleton.images.insert(img, at: 0)
 //            singleton.upload_image(imageURL:NSURL(fileURLWithPath: localPath))
-   
         }
+        
         self.dismiss(animated: true, completion: {
 
             
         })
-            picker.dismiss(animated: true, completion: nil)
+        picker.dismiss(animated: true, completion: nil)
         self.appDelegate.goToGrid()
     }
     

@@ -21,38 +21,13 @@ extension UIFont {
     open class var MNUbuntuFifteen: UIFont { return UIFont(name: "Ubuntu-Regular", size: 15)! }
     open class var MNUbuntuTwenty: UIFont { return UIFont(name: "Ubuntu-Regular", size: 20)! }
     open class var MNUbuntuTwentyFive: UIFont { return UIFont(name: "Ubuntu-Regular", size: 25)! }
+    
+    open class var MNUbuntuThirtyFive: UIFont { return UIFont(name: "Ubuntu-Regular", size: 35)! }
+    open class var MNUbuntuFourtyFive: UIFont { return UIFont(name: "Ubuntu-Regular", size: 45)! }
 }
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    
-
-    func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
-        let size = image.size
-        
-        let widthRatio  = targetSize.width  / image.size.width
-        let heightRatio = targetSize.height / image.size.height
-        
-        // Figure out what our orientation is, and use that to form the rectangle
-        var newSize: CGSize
-        if(widthRatio > heightRatio) {
-            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
-        } else {
-            newSize = CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
-        }
-        
-        // This is the rect that we've calculated out and this is what is actually used below
-        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
-        
-        // Actually do the resizing to the rect using the ImageContext stuff
-        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
-        image.draw(in: rect)
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        return newImage!
-    }
-
     var window: UIWindow?
     var userPageNavController:UINavigationController!
     let singleton = MainSingleton.sharedInstance
@@ -68,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func viewImage(image:UIImage, index:Int) {
         indexOfImageBeingViewed = index
         imageController = ViewImageController(image:image)
-        imageController.navigationItem.titleView = makeTitle(titleText: "Image View")
+        imageController.navigationItem.titleView = makeTitle(titleText: "Tapped Image")
         imageController.navigationItem.leftBarButtonItem = back_btn_item
         imageController.navigationItem.rightBarButtonItem = delete_btn_item
         userPageNavController.pushViewController(imageController, animated: true)
@@ -164,7 +139,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let delete_btn = UIButton(type: .custom)
         delete_btn.frame = CGRect(x: 0, y: 0, width: 30, height: 0)
         delete_btn.contentHorizontalAlignment = .left
-        delete_btn.setFAIcon(icon: FAType.FAEllipsisH, iconSize: 30, forState: UIControlState.normal)
+        delete_btn.setFAIcon(icon: FAType.FATrash, iconSize: 30, forState: UIControlState.normal)
         delete_btn.addTarget(self, action: #selector(self.deleteImgAndPop), for: .touchUpInside)
         delete_btn_item = UIBarButtonItem(customView: delete_btn)
 
@@ -176,17 +151,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        
 //        
 //        userPageNavController.view.backgroundColor = .blue
-        UIApplication.shared.statusBarStyle = .default
+        UIApplication.shared.statusBarStyle = .lightContent
 //        UINavigationBar.appearance().barTintColor = UIColor.darkGray.withAlphaComponent(0.5)
         UINavigationBar.appearance().barTintColor = UIColor.black
         
        
 
-
-        var preferredStatusBarStyle: UIStatusBarStyle {
-            return .lightContent
-        }
-        
 //        userImagesGrid = customcollectionview(collectionViewLayout: layout)
 //        userImagesGrid.navigationItem.titleView = makeTitle(titleText: "Theme Layout")
         
@@ -200,11 +170,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         window?.rootViewController = tab_controller
         
-        
         normalViewNav.isNavigationBarHidden = false
         camera_nav.isNavigationBarHidden = false
         userPageNavController.isNavigationBarHidden = false
-
+        singleton.appDelegate = self
         return true
     }
 
@@ -231,7 +200,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Saves changes in the application's managed object context before the application terminates.
         singleton.set_images_coredata()
         
-        self.saveContext()
+//        self.saveContext()
     }
 
     // MARK: - Core Data stack

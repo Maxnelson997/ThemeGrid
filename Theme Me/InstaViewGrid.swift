@@ -40,8 +40,12 @@ class InstaViewGrid: UICollectionViewController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cvcell", for: indexPath) as! imViewCell
         
         cell.awakeFromNib()
-        cell.imView.image = singleton.images[indexPath.item]
-        
+        let image = singleton.images[indexPath.item]
+        if image.size.width > 2500 || image.size.height > 2500 {
+            cell.imView.image = singleton.resizeImage(image: image, targetSize: CGSize(width: image.size.width*0.1, height: image.size.height*0.1))
+        } else {
+            cell.imView.image = image
+        }
         return cell
     }
     
@@ -64,7 +68,7 @@ class InstaViewGrid: UICollectionViewController {
         case UICollectionElementKindSectionHeader:
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "menu_header", for: indexPath) as! InstaHeader
             header.awakeFromNib()
-            header.imView.image = #imageLiteral(resourceName: "InstaHeader")
+            header.imView.image = #imageLiteral(resourceName: "InstaheaderOne")
             return header
         default:
             break
@@ -87,7 +91,7 @@ class InstaViewGrid: UICollectionViewController {
 extension InstaViewGrid: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let numColumns:CGFloat = 3
-        let boxSize = (collectionView.frame.width - (numColumns - 1)) / 3
+        let boxSize = (collectionView.frame.width - (numColumns)) / 3
         return CGSize(width: (boxSize), height: (boxSize))
     }
     

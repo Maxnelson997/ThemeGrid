@@ -38,10 +38,13 @@ class customcollectionview: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cvcell", for: indexPath) as! imViewCell
-        
         cell.awakeFromNib()
-        cell.imView.image = singleton.images[indexPath.item]
-        
+        let image = singleton.images[indexPath.item]
+        if image.size.width > 2500 || image.size.height > 2500 {
+            cell.imView.image = singleton.resizeImage(image: image, targetSize: CGSize(width: image.size.width*0.1, height: image.size.height*0.1))
+        } else {
+            cell.imView.image = image
+        }
         return cell
     }
 
@@ -55,7 +58,6 @@ class customcollectionview: UICollectionViewController {
     }
    var pageControl = UIPageControl()
     override func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        
         let temp = singleton.images.remove(at: sourceIndexPath.item)
         singleton.images.insert(temp, at: destinationIndexPath.item)
     }
@@ -66,11 +68,8 @@ class customcollectionview: UICollectionViewController {
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "menu_header", for: indexPath) as! MenuHeader
             header.isGrid = true
             header.awakeFromNib()
-            header.headlineText = "Theme Grid"
-//            header.sublineText = "The photos you add show here. Tap and hold an image to re-arrange the grid to get a feel for what you want to post on Instagram next."
-            header.sublineText = " The photos you add show up here.\n\n- Tap to view an image and or delete it.\n\n- Hold for a second then drag an image to re-arrange it on your grid.\n\n- Swipe right to view what your pictures would look like on your Instagram page"
+            header.sublineText = " The photos you add show up here.\n\n- Tap to view an image and or delete it.\n\n- Hold for a second then drag an image to re-arrange it on your grid.\n\n- Swipe right to view the same grid and pictures as if they were on your Instagram page"
             header.subline.textAlignment = .left
-//            Swipe right to view the same grid as if it were on your Instagram page
             return header
         default:
             break
@@ -93,7 +92,7 @@ class customcollectionview: UICollectionViewController {
 extension customcollectionview: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let numColumns:CGFloat = 3
-        let boxSize = (collectionView.frame.width - (numColumns - 1)) / 3
+        let boxSize = (collectionView.frame.width - (numColumns)) / 3
         return CGSize(width: (boxSize - 40/3), height: (boxSize - 40/3))
     }
     

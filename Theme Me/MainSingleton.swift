@@ -23,6 +23,7 @@ extension Array
 }
 class MainSingleton {
     
+    var appDelegate:AppDelegate!
     static let sharedInstance = MainSingleton()
     var context:NSManagedObjectContext!
     
@@ -31,7 +32,7 @@ class MainSingleton {
     let dev = UIDevice.current
     var directory_name_for_user:String!
     var images:[UIImage] = []
-    var menu_images: [UIImage] = [#imageLiteral(resourceName: "DSC08741"), #imageLiteral(resourceName: "DSC08767"), #imageLiteral(resourceName: "DSC08713"), #imageLiteral(resourceName: "DSC08777-2"), #imageLiteral(resourceName: "DSC08742"), #imageLiteral(resourceName: "DSC08772")]//, #imageLiteral(resourceName: "DSC08724-2"), #imageLiteral(resourceName: "DSC08772"), #imageLiteral(resourceName: "DSC08724-2")]
+    var menu_images: [UIImage] = [#imageLiteral(resourceName: "noskate"), #imageLiteral(resourceName: "centerbig"), #imageLiteral(resourceName: "cattoo"), #imageLiteral(resourceName: "graycomp"), #imageLiteral(resourceName: "maxgray"), #imageLiteral(resourceName: "gwagon"),#imageLiteral(resourceName: "centersmall") ,#imageLiteral(resourceName: "maxlegendary")]//, #imageLiteral(resourceName: "DSC08724-2"), #imageLiteral(resourceName: "DSC08772"), #imageLiteral(resourceName: "DSC08724-2")]
     
     var image_count:Int {
         get {
@@ -117,7 +118,7 @@ class MainSingleton {
         let coreDataObject = NSKeyedArchiver.archivedData(withRootObject: CDataImageArray)
         image_count_coredata.setValue(coreDataObject, forKey: "image")
         //store new count
-        
+
         do
         {
             try context.save()
@@ -127,7 +128,7 @@ class MainSingleton {
         {
             print("hmm error saving credentials")
         }
-        
+//                appDelegate.saveContext()
         
     }
     
@@ -326,5 +327,29 @@ class MainSingleton {
     //            
     //        }
     
-    
+    func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
+        let size = image.size
+        
+        let widthRatio  = targetSize.width  / image.size.width
+        let heightRatio = targetSize.height / image.size.height
+        
+        // Figure out what our orientation is, and use that to form the rectangle
+        var newSize: CGSize
+        if(widthRatio > heightRatio) {
+            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
+        } else {
+            newSize = CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
+        }
+        
+        // This is the rect that we've calculated out and this is what is actually used below
+        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
+        
+        // Actually do the resizing to the rect using the ImageContext stuff
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+        image.draw(in: rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage!
+    }
 }

@@ -25,6 +25,7 @@ class MenuHeader:UICollectionReusableView {
     
     var active:Bool = false
     var isGrid:Bool = false
+
     
     override func awakeFromNib() {
         if !active {
@@ -38,16 +39,17 @@ class MenuHeader:UICollectionReusableView {
             
             headline.textColor = .black
             subline.textColor = .white
-            
+
             headline.font = UIFont.MNUbuntuTwentyFive
             subline.font = UIFont.MNUbuntuFifteen
+
             subline.numberOfLines = 15
             
             headline.textAlignment = .center
             subline.textAlignment = .left
             
             var top:CGFloat = 15
-            var bottom:CGFloat = -45
+            var bottom:CGFloat = -65
             var headline_h:CGFloat = 0
             var subline_h:CGFloat = 1
             if isGrid {

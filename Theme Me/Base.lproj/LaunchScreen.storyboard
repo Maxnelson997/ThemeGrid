@@ -20,7 +20,18 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="themegridlaunchscreen" translatesAutoresizingMaskIntoConstraints="NO" id="qMD-my-UAl">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="qMD-my-UAl" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="AUy-oS-f23"/>
+                            <constraint firstAttribute="trailing" secondItem="qMD-my-UAl" secondAttribute="trailing" id="Bwe-dh-KBw"/>
+                            <constraint firstItem="qMD-my-UAl" firstAttribute="bottom" secondItem="xb3-aO-Qok" secondAttribute="top" id="nuT-C8-f7C"/>
+                            <constraint firstItem="qMD-my-UAl" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="uAX-5O-Qax"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -28,4 +39,7 @@
             <point key="canvasLocation" x="52" y="374.66266866566718"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="themegridlaunchscreen" width="510" height="964"/>
+    </resources>
 </document>
